@@ -12,15 +12,15 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class User {
+public class Category {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-    @Column(name = "user_name ", nullable = false)
-    private  String name;
-    private String email;
-    private String password;
-    private String about;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String categoryTitle;
+    private String categoryDescription;
+
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    // cascade mtlb agr parent ko hta rahe to child bhi htjayega aur same save mai
+    //keval parent nikle child nhi to lazy kar dete
     private List<Post> posts = new ArrayList<>();
 }

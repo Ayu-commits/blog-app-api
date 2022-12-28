@@ -5,6 +5,7 @@ import com.blog.blogappapi.entities.User;
 import com.blog.blogappapi.payloads.UserDto;
 import com.blog.blogappapi.repositories.UserRepo;
 import com.blog.blogappapi.services.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,8 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepo userRepo;
+    @Autowired
+    private ModelMapper modelMapper;
 
 
     @Override
@@ -58,23 +61,24 @@ public class UserServiceImpl implements UserService {
 
     private User dtoToUser(UserDto userDto)
     {
-        User user = new User();
-        user.setId(userDto.getId());
-        user.setName(userDto.getName());
-        user.setEmail(userDto.getEmail());
-        user.setAbout(userDto.getAbout());
-        user.setPassword(userDto.getPassword());
+        User user = this.modelMapper.map(userDto,User.class);
+//        user.setId(userDto.getId());
+//        user.setName(userDto.getName());
+//        user.setEmail(userDto.getEmail());
+//        user.setAbout(userDto.getAbout());
+//        user.setPassword(userDto.getPassword());
         return user;
     }
 
     private UserDto userToDto(User user)
     {
-        UserDto userDto = new UserDto();
-        userDto.setAbout(user.getAbout());
-        userDto.setEmail(user.getEmail());
-        userDto.setId(user.getId());
-        userDto.setPassword(user.getPassword());
-        userDto.setName(user.getName());
+        UserDto userDto = modelMapper.map(user,UserDto.class);
+
+//        userDto.setAbout(user.getAbout());
+//        userDto.setEmail(user.getEmail());
+//        userDto.setId(user.getId());
+//        userDto.setPassword(user.getPassword());
+//        userDto.setName(user.getName());
         return userDto;
     }
 }
